@@ -8,11 +8,14 @@ WIDTH, HEIGHT=800,800
 WIN = pygame.display.set_mode((WIDTH,HEIGHT))
 pygame.display.set_caption("planet simulation")
 
+FONT = pygame.font.SysFont("comicsans", 16)
+
 WHITE = (255,255,255)
 YELLOW = (255,255,0)
 BLUE = (0,0,255)
 RED = (255,0,0)
 DARK_GREY = (80,78,81)
+
 class Planet:
     AU = 149.6e6 * 1000 #astronomical unit in meters
     G = 6.6743e-11
@@ -45,9 +48,13 @@ class Planet:
                 y = y * self.SCALE + HEIGHT/2
                 drawing_points.append((x,y))
             pygame.draw.lines(win, self.color, False, drawing_points, 2)
-            
+
         pygame.draw.circle(win,self.color,(x,y),self.radius)
-    
+
+        if not self.sun:
+            distance_text = FONT.render(f"{round(self.distance_to_sun/1000,1)}km", 1, WHITE)
+            win.blit(distance_text, (x,y))
+
     def attraction(self, other):
         other_x, other_y = other.x, other.y
         distance_x = other_x - self.x
@@ -124,4 +131,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    
