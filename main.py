@@ -93,7 +93,6 @@ def main():
     run = True
     clock = pygame.time.Clock()
 
-    #making planets-Sun
     sun = Planet(0,0,30,YELLOW,1.98892 * 10**30)
     sun.sun = True
 
@@ -112,9 +111,10 @@ def main():
     planets_list = [sun, earth, mars, mercury, venus]
 
     
-
+    time =0
     while run:
         clock.tick(60) #maximum frames that can be refreshed in set to 60 frames per second(this loop runs 60 times per sec)
+
         WIN.fill((0,0,0))
 
         for event in pygame.event.get():
@@ -125,8 +125,10 @@ def main():
             planet.update_position(planets_list)
             planet.draw(WIN)
         
+        time_text = FONT.render(f"day{time}", 1, WHITE)
+        WIN.blit(time_text, (50,50))
         pygame.display.update()
-    
+        time += 1
     pygame.quit()
 
 if __name__ == '__main__':
